@@ -8,11 +8,11 @@ const SignUp = () => {
 
   const { register,handleSubmit, formState: {errors} } = useForm()
   const { createUser, signInWithGoogle, updateUser } = useContext(AuthContext)
-  const [ logInError, setLogInError ] = useState('')
+  const [ signUpInError, setSignUpInError ] = useState('')
 
   const signUpHandler = data => {
     // sign in new user 
-    setLogInError('')
+    setSignUpInError('')
     createUser(data.email,data.password)
     .then(result=>{
       console.log(result)
@@ -26,22 +26,22 @@ const SignUp = () => {
         toast.success('Profile Updated!')
       })
       .catch(err=>{
-        setLogInError(err.message)
+        setSignUpInError(err.message)
       })
     })
     .catch(err=>{
-      logInError(err.message)
+      signUpInError(err.message)
     })
   }
 
   const handleGoogleSignUp = () => {
-    setLogInError('')
+    setSignUpInError('')
     signInWithGoogle()
     .then(result=>{
       toast.success('User log in successfully!')
     })
     .catch(err=>{
-      setLogInError(err.message)
+      setSignUpInError(err.message)
     })
   }
 
@@ -96,7 +96,7 @@ const SignUp = () => {
         <input className="hover:bg-[#000000] text-[#FAFAFA] bg-[#49C0B6]  rounded-lg mb-1 p-3" type="submit" />
 
         <div>
-            {logInError && <p className="text-error">{logInError}</p>}
+            {signUpInError && <p className="text-error">{signUpInError}</p>}
         </div>
 
         <p className="text-center">Already have a account?<Link to='/login' className="text-[#1400F5]">Signup</Link></p>
