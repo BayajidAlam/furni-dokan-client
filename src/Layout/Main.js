@@ -6,9 +6,13 @@ import NavBar from '../Shared/NavBar/NavBar';
 const Main = () => {
   return (
     <div>
+        <div className='bg-[#dbebfa] text-[#112A46]'>
         <NavBar></NavBar>
+        </div>
         <Outlet></Outlet>
+        <div className='bg-[#dbebfa]'>
         <Footer></Footer>
+        </div>
     </div>
   );
 };
