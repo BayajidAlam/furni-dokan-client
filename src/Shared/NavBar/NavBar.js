@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
+import toast, { Toaster } from 'react-hot-toast';
 
 const NavBar = () => {
 
+  const { user, signOutUser } = useContext(AuthContext)
+
+  const handleLogOut = () => {
+    signOutUser()
+    .then(()=>{
+      toast.success('Sign Out Successfully')
+    })
+    .catch(err=>{
+      toast.error(err.message)
+    })
+  }
   const menuItems = 
      <>
           <li>
@@ -11,15 +24,21 @@ const NavBar = () => {
           <li>
             <Link to='/category'>Categories</Link>
           </li>
-          <li>
-            <Link to='/dashboard'>Dashboard</Link>
+          {
+            user?
+           <>
+                <li>
+                <Link to='/dashboard'>Dashboard</Link>
+              </li>
+                <li>
+                <Link><button onClick={handleLogOut}>Sign Out</button></Link>
+              </li>
+           </>:
+            <li>
+            <Link to='/login'>Login</Link>
           </li>
-          <li>
-            <Link>Login</Link>
-          </li>
-          <li>
-            <Link>Sign Out</Link>
-          </li>
+        
+          } 
      </>
   return (
     <div  className="navbar max-w-[1440px] mx-auto">
@@ -59,6 +78,7 @@ const NavBar = () => {
             {menuItems}
         </ul>
       </div>
+      <Toaster/>
     </div>
   );
 };

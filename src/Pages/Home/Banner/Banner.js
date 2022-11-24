@@ -3,7 +3,7 @@ import BannerPic from '../../../assets/download.jpg'
 
 const Banner = () => {
   return (
-            <div className="card lg:card-side shadow-xl my-4">
+            <div className="card lg:card-side shadow-xl rounded-none my-4">
             <figure className='lg:w-1/2'>
               <img src={BannerPic} alt="" />
             </figure>
