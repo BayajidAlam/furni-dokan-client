@@ -18,7 +18,7 @@ const Error404 = () => {
   return (
     <div className='flex justify-center items-center flex-col'>
       <div className='max-w-[800px] max-h-[500px] mx-auto' ref={container}></div>
-      <p className='text-4xl font-serif  text-center text-[#bde0fe]'>Something went wrong! Back to <Link className='text-primary' to='/'>Home</Link></p>
+      <p className='text-4xl font-serif  text-center text-[#000000]'>Something went wrong! Back to <Link className='text-primary' to='/'>Home</Link></p>
     </div>
   );
 };

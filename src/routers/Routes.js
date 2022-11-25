@@ -3,6 +3,7 @@ import Main from "../Layout/Main";
 import AllBuyers from "../Pages/Admin/AllBuyers";
 import AllSellers from "../Pages/Admin/AllSellers";
 import ReportedItems from "../Pages/Admin/ReportedItems";
+import Blog from "../Pages/Blog/Blog";
 import MyOrders from "../Pages/Buyer/MyOrders/MyOrders";
 import CategoryPage from "../Pages/CategoryPage/CategoryPage";
 import Dashboard from "../Pages/Dashboard/Dashboard";
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login></Login>
+      },
+      {
+        path: '/blogs',
+        element: <Blog></Blog>
       },
       {
         path:'/category/:name',
