@@ -45,7 +45,7 @@ const NavBar = () => {
    
    
   return (
-    <div  className="navbar max-w-[1440px] mx-auto bg-[#dbebfa] text-[#112A46] flex justify-between">
+    <div  className="navbar max-w-[1440px] mx-auto flex justify-between">
       <div className="navbar-start">
 
         {/* for mble  */}

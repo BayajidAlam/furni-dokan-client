@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -9,6 +9,9 @@ const SignUp = () => {
   const { register,handleSubmit, formState: {errors} } = useForm()
   const { createUser, signInWithGoogle, updateUser } = useContext(AuthContext)
   const [ signUpInError, setSignUpInError ] = useState('')
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathName || '/';
 
   const signUpHandler = data => {
     const name = data.name ;
@@ -77,6 +80,7 @@ const SignUp = () => {
        .then(res=>res.json())
        .then(data=>{
         if(data.acknowledged){
+          navigate(from,{replace: true})
           toast.success('User stored successfully')
         }
        })
@@ -132,7 +136,7 @@ const SignUp = () => {
        {errors.password && <p className="text-error">{errors.password?.message}</p>}
 
        <label className="label">
-          <span className="label-text text-lg">Name</span>
+          <span className="label-text text-lg">Role</span>
         </label>
 
           <select className='p-3 rounded-lg p mb-6' name="role" {...register('role')}>
