@@ -62,7 +62,8 @@ const AddAProduct = () => {
         mobile,
         conditions,
         description,
-        email
+        email,
+        salesStatus :'unsold'
       }
      
       // send-server-db 
@@ -194,7 +195,7 @@ const AddAProduct = () => {
               className="select select-bordered"
               required
               >
-                  <option defaultValue='excellent' value='excellent' disabled >Excellent</option>
+                  <option defaultValue='excellent' value='excellent'>Excellent</option>
                   <option value='good'>Good</option>
                   <option value="fair">Fair</option>
               </select>
