@@ -11,11 +11,20 @@ const SignUp = () => {
   const [ signUpInError, setSignUpInError ] = useState('')
 
   const signUpHandler = data => {
+    const name = data.name ;
+    const email = data.email 
+    const role = data.role;
+  
+    const userData = {
+      name,
+      email,
+      role
+    }
+
     // sign in new user 
     setSignUpInError('')
     createUser(data.email,data.password)
     .then(result=>{
-      console.log(result)
       toast.success('User created successfully!')
       const userInfo = {
         displayName: data.name
@@ -24,6 +33,7 @@ const SignUp = () => {
       updateUser(userInfo)
       .then(()=>{
         toast.success('Profile Updated!')
+        saveUser(userData)
       })
       .catch(err=>{
         setSignUpInError(err.message)
@@ -38,12 +48,40 @@ const SignUp = () => {
     setSignUpInError('')
     signInWithGoogle()
     .then(result=>{
+      const user = result.user
+      const name = user.displayName;
+      const email = user.email
+      const role = 'buyer'
+      const userData = {
+        name,
+        email,
+        role
+      }
+      saveUser(userData)
       toast.success('User log in successfully!')
     })
     .catch(err=>{
       setSignUpInError(err.message)
     })
   }
+
+  // saveUser to db 
+  const saveUser = (userData) => {
+       fetch('http://localhost:5000/user',{
+          method:"POST",
+          headers: {
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify(userData)
+       })
+       .then(res=>res.json())
+       .then(data=>{
+        if(data.acknowledged){
+          toast.success('User stored successfully')
+        }
+       })
+  }
+
 
   return (
     <div className="bg-[#DBEBFA] flex flex-col justify-center items-center pt-6">
@@ -77,12 +115,12 @@ const SignUp = () => {
         />
           {errors.email && <p className="text-error">{errors.email?.message}</p>}
         <label className="label">
-          <span className="label-text">Password</span>
+          <span className="label-text text-lg">Password</span>
         </label>
 
         <input
           type='password'
-          className="p-3 rounded-lg mb-6"
+          className="p-3 rounded-lg mb-2"
           {...register('password',{
             required: 'Password is required',
             minLength: { value: 6, message: 'password must be 6 character long'},
@@ -93,6 +131,14 @@ const SignUp = () => {
 
        {errors.password && <p className="text-error">{errors.password?.message}</p>}
 
+       <label className="label">
+          <span className="label-text text-lg">Name</span>
+        </label>
+
+          <select className='p-3 rounded-lg p mb-6' name="role" {...register('role')}>
+            <option value="buyer" defaultValue='buyer'>Buyer</option>
+            <option value="seller">seller</option>
+          </select>
         <input className="hover:bg-[#000000] text-[#FAFAFA] bg-[#49C0B6]  rounded-lg mb-1 p-3" type="submit" />
 
         <div>

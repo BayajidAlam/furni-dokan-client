@@ -21,27 +21,31 @@ const NavBar = () => {
           <li>
             <Link to='/'>Home</Link>
           </li>
-          <li>
-            <Link to='/category'>Categories</Link>
-          </li>
           {
             user?
            <>
-                <li>
+            <li>
                 <Link to='/dashboard'>Dashboard</Link>
-              </li>
-                <li>
-                <Link><button onClick={handleLogOut}>Sign Out</button></Link>
-              </li>
+            </li>
+            <li>
+                <Link>
+                   <button onClick={handleLogOut}>Sign Out</button>
+                </Link>
+            </li>
            </>:
             <li>
             <Link to='/login'>Login</Link>
           </li>
         
           } 
+           <li>
+            <Link to='/blog'>Blog</Link>
+          </li>
      </>
+   
+   
   return (
-    <div  className="navbar max-w-[1440px] mx-auto">
+    <div  className="navbar max-w-[1440px] mx-auto bg-[#dbebfa] text-[#112A46] flex justify-between">
       <div className="navbar-start">
 
         {/* for mble  */}
@@ -69,7 +73,9 @@ const NavBar = () => {
            {menuItems}
           </ul>
         </div>
+
         <a className="btn btn-ghost normal-case text-xl">Furni Dokan</a>
+
       </div>
 
       {/* for desktop */}
@@ -79,6 +85,26 @@ const NavBar = () => {
         </ul>
       </div>
       <Toaster/>
+
+      <label 
+              htmlFor="dashboard-drawer" 
+              tabIndex={0} 
+              className="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </label>
     </div>
   );
 };
