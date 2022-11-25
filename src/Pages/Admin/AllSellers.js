@@ -1,6 +1,8 @@
 import React from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useQuery } from '@tanstack/react-query'
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const AllSellers = () => {
 
@@ -28,7 +30,7 @@ const AllSellers = () => {
       .then(data => {
         if(data.deletedCount > 0){
           refetch()
-          console.log(data)
+          toast.success('User deleted Successfully!')
         }
       });
   }
@@ -59,6 +61,7 @@ const AllSellers = () => {
    
         </tbody>
       </table>
+      <Toaster/>
     </div>
   );
 };

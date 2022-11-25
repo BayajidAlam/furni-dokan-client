@@ -7,6 +7,7 @@ import MyOrders from "../Pages/Buyer/MyOrders/MyOrders";
 import CategoryPage from "../Pages/CategoryPage/CategoryPage";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import DashBoardLayout from "../Pages/Dashboard/DashBoardLayout";
+import Error404 from "../Pages/Error404/Error404";
 import Home from "../Pages/Home/Home/Home ";
 import Login from "../Pages/LogIn/Login";
 import AddAProduct from "../Pages/Saller/AddAProduct";
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
   {
     path:'/',
     element: <Main></Main>,
+    errorElement:<Error404></Error404>,
     children:  [
       {
         path: '/',
@@ -42,6 +44,7 @@ export const router = createBrowserRouter([
   {
     path:'/dashboard',
     element: <DashBoardLayout></DashBoardLayout>,
+    errorElement:<Error404></Error404>,
     children: [
       {
         path:'/dashboard',
