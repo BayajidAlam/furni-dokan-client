@@ -8,7 +8,7 @@ const Card = ({singlecat}) => {
   return (
     <div className="card w-full shadow-lg bg-[#dbebfa] rounded-none text-[#000000]">
       <figure>
-        <img className="w-full rounded-lg" src={picture} alt="Shoes" />
+        <img className="w-full h-80 rounded-lg" src={picture} alt="Shoes" />
       </figure>
       <div className="card-body">
         <div className="flex items-center justify-between">
