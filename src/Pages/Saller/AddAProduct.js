@@ -79,7 +79,7 @@ const AddAProduct = () => {
         salesStatus :'unsold'
       }
      
-     if(profileUser === 'seller'){
+     if(profileUser !== 'seller'){
       // send-server-db 
       fetch('http://localhost:5000/category',{
         method:'POSt',

@@ -3,6 +3,7 @@ import { AuthContext } from "../../context/AuthProvider";
 import toast, { Toaster } from 'react-hot-toast';
 import { useContext } from "react";
 
+
 const MyProducts = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email;
@@ -43,6 +44,27 @@ const MyProducts = () => {
     })
   }
 
+  // update a product to advertise 
+  const handleAdvertise = (id) => {
+    const updatedDoc = {
+      state:'advertised'
+    }
+    fetch(`http://localhost:5000/advertisement/${id}`,{
+      method:"PUT",
+      headers: {
+        'content-type':'application/json'
+      },
+      body:JSON.stringify(updatedDoc)
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      if(data.modifiedCount){
+        refetch()
+        toast.success('Added to advertise')
+      }
+    })
+  }
+
   return (
     <div className="overflow-x-auto w-full">
       <table className="table w-full">
@@ -53,7 +75,7 @@ const MyProducts = () => {
             <th>Product Price</th>
             <th>sales status</th>
             <th>Delete</th>
-            <th></th>
+            <th>Advertisement State</th>
           </tr>
         </thead>
         <tbody>
@@ -98,7 +120,32 @@ const MyProducts = () => {
                   </svg>
                 </button>
               </th>
-              <th>{product.salesStatus==='unsold'?<button className="btn btn-sm hover:bg-[#dbebfa]  bg-base-200 text-[#000000]">Advertise</button>:''}</th>
+              <th>
+              {
+                product.salesStatus === 'unsold' && product.addState !== 'advertised' ? 
+                <button
+                onClick={()=>handleAdvertise(product._id)}
+                className="btn btn-sm hover:bg-[#dbebfa]  bg-base-200 text-[#000000]">Advertise</button>
+                :
+              <div className="flex items-center">
+                <p>Added</p>
+                 <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                strokeWidth={1.5} 
+                stroke="currentColor" 
+                className="w-6 h-6 ml-2 bg-green-500 p-1 text-white rounded-2xl">
+                <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" 
+                />
+              </svg>
+              </div>
+              
+              }
+              </th>
             </tr>
           ))}
         </tbody>
