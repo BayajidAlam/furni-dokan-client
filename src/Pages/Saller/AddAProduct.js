@@ -18,7 +18,15 @@ const AddAProduct = () => {
     
   })
 
-
+   const { data:idUser} = useQuery({
+     queryKey:['user',user],
+     queryFn: async () => {
+       const res = await fetch(`http://localhost:5000/user?email=${user?.email}`)
+       const data = await res.json()
+       return data;
+     }
+   })
+console.log(idUser)
   const handleSubmit = event => {
     event.preventDefault()
     
@@ -66,7 +74,8 @@ const AddAProduct = () => {
         salesStatus :'unsold'
       }
      
-      // send-server-db 
+     if(idUser === 'seller'){
+         // send-server-db 
       fetch('http://localhost:5000/category',{
         method:'POSt',
         headers:{
@@ -82,6 +91,10 @@ const AddAProduct = () => {
           navigate('/dashboard/myProduct')
         }
       })
+     }
+     else{
+      toast.error('You have to open a seller account to add a product')
+     }
     })
   }
 

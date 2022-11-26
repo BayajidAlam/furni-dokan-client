@@ -15,6 +15,7 @@ import AddAProduct from "../Pages/Saller/AddAProduct";
 import MyBuyers from "../Pages/Saller/MyBuyers";
 import MyProducts from "../Pages/Saller/MyProducts";
 import SignUp from "../Pages/SignUp/SignUp";
+import PrivateRoute from "./PrivateRoute";
 
 
 export const router = createBrowserRouter([
@@ -37,7 +38,7 @@ export const router = createBrowserRouter([
       },
       {
         path:'/category/:name',
-        element: <CategoryPage></CategoryPage>,
+        element: <PrivateRoute><CategoryPage></CategoryPage></PrivateRoute>,
         loader: ({params})=>fetch(`http://localhost:5000/category?name=${params.name}`)
       },
       {
@@ -48,7 +49,7 @@ export const router = createBrowserRouter([
   },
   {
     path:'/dashboard',
-    element: <DashBoardLayout></DashBoardLayout>,
+    element: <PrivateRoute><DashBoardLayout></DashBoardLayout></PrivateRoute>,
     errorElement:<Error404></Error404>,
     children: [
       {

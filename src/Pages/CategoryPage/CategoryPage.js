@@ -23,6 +23,7 @@ const CategoryPage = () => {
               selectedCard && 
               <BookingModal
               selectedCard={selectedCard}
+              setSelectedCart={setSelectedCart}
               ></BookingModal>
             }
       </section>
