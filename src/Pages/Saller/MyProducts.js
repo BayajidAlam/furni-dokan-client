@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthProvider";
+import toast, { Toaster } from 'react-hot-toast';
+import { useContext } from "react";
 
 const MyProducts = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email;
 
-  const { data: myProducts = [] } = useQuery({
+  const { data: myProducts = [],refetch,isLoading } = useQuery({
     queryKey: ["myProdcuts", email],
     queryFn: async () => {
       const res = await fetch(
@@ -16,6 +17,31 @@ const MyProducts = () => {
       return data;
     },
   });
+
+    // loader for smooth experience 
+
+    if(isLoading){
+      return <div className='flex justify-center mt-80'>
+        <div className="w-20 h-20 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>
+      </div>
+    }
+
+  // admin:delete a item
+  const handleDelete = id => {
+    fetch(`http://localhost:5000/deleteProduct?id=${id}`,{
+      method:"DELETE",
+      headers:{
+        'content-type':'application/json'
+      }
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      if (data.deletedCount > 0) {
+        refetch();
+        toast.success('User deleted Successfully!')
+      }
+    })
+  }
 
   return (
     <div className="overflow-x-auto w-full">
@@ -55,7 +81,7 @@ const MyProducts = () => {
               <td>{product.resalePrice}</td>
               <td>{product.salesStatus === "unsold" ? "Unsold" : "Sold"}</td>
               <th>
-                <button className="btn btn-ghost btn-xs">
+                <button onClick={()=>handleDelete(product._id)} className="btn btn-ghost btn-xs">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -77,6 +103,7 @@ const MyProducts = () => {
           ))}
         </tbody>
       </table>
+      <Toaster/>
     </div>
   );
 };

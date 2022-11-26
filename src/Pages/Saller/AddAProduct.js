@@ -262,7 +262,7 @@ const AddAProduct = () => {
             </div>
 
             <div className="form-control mt-6">
-              <button type="submit" className="btn btn-primary">Login</button>
+              <button type="submit" className="btn btn-primary">Add</button>
             </div>
           </form>
         </div>

@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const AllSellers = () => {
 
-  const { data:allSellers=[],refetch } = useQuery({
+  const { data:allSellers=[],refetch,isLoading } = useQuery({
     queryKey:['allSellers'],
     queryFn: async () =>{
       const res = await fetch('http://localhost:5000/allSellers?role=seller')
@@ -15,6 +15,14 @@ const AllSellers = () => {
     }
   })
 
+     // loader for smooth experience 
+
+     if(isLoading){
+      return <div className='flex justify-center mt-80'>
+        <div className="w-20 h-20 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>
+      </div>
+    }
+    
   // admin:delete a user 
   const handleDelete = (email) =>{
     console.log(email)
