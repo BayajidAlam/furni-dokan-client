@@ -3,15 +3,25 @@ import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 import toast, { Toaster } from 'react-hot-toast';
+import useToken from '../../hook/useToken';
 
 const SignUp = () => {
 
   const { register,handleSubmit, formState: {errors} } = useForm()
   const { createUser, signInWithGoogle, updateUser } = useContext(AuthContext)
   const [ signUpInError, setSignUpInError ] = useState('')
+  const [ createdUserEmail, setCreatedUserEmail ] = useState('')
+  const [token] = useToken(createdUserEmail)
+  
   const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from?.pathName || '/';
+
+
+  if(token){
+    navigate(from,{replace: true})
+  }
+
 
   const signUpHandler = data => {
     const name = data.name ;
@@ -47,6 +57,7 @@ const SignUp = () => {
     })
   }
 
+  // sign up with google 
   const handleGoogleSignUp = () => {
     setSignUpInError('')
     signInWithGoogle()
@@ -80,8 +91,8 @@ const SignUp = () => {
        .then(res=>res.json())
        .then(data=>{
         if(data.acknowledged){
-          navigate(from,{replace: true})
           toast.success('User stored successfully')
+          setCreatedUserEmail(userData.email)
         }
        })
   }

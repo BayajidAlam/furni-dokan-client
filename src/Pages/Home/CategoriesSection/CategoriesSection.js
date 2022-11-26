@@ -8,7 +8,11 @@ const CategoriesSection = () => {
 
   const {data:categories=[]} = useQuery({
     queryKey: ['categorys'],
-    queryFn: () => fetch('http://localhost:5000/categorys')
+    queryFn: () => fetch('http://localhost:5000/categorys',{
+      headers:{
+        authorization: `bearer ${localStorage.getItem('accessToken')}`
+      }
+    })
     .then(res=>res.json())
     
   })

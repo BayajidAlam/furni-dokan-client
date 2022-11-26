@@ -4,7 +4,6 @@ const Blog = () => {
   return (
     <div className="lg:max-w-[1440px] w-[96%] mx-auto">
       <div className="my-4">
-        <h1>Blog</h1>
         <h1 className="text-lg font-bold">
           Q. What are the different ways to manage a state in a React
           application?

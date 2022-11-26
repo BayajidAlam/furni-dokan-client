@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import toast, { Toaster } from 'react-hot-toast';
 
+
 const NavBar = () => {
 
   const { user, signOutUser } = useContext(AuthContext)

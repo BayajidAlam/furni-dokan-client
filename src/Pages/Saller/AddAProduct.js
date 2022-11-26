@@ -13,12 +13,17 @@ const AddAProduct = () => {
   // load data for category option 
   const {data:categories=[]} = useQuery({
     queryKey: ['categorys'],
-    queryFn: () => fetch('http://localhost:5000/categorys')
+    queryFn: () => fetch('http://localhost:5000/categorys',{
+      headers:{
+        authorization: `bearer ${localStorage.getItem('accessToken')}`
+      }
+    })
     .then(res=>res.json())
     
   })
 
-   const { data:idUser} = useQuery({
+  //  get user role 
+   const { data:profileUser} = useQuery({
      queryKey:['user',user],
      queryFn: async () => {
        const res = await fetch(`http://localhost:5000/user?email=${user?.email}`)
@@ -26,7 +31,7 @@ const AddAProduct = () => {
        return data;
      }
    })
-console.log(idUser)
+
   const handleSubmit = event => {
     event.preventDefault()
     
@@ -45,7 +50,7 @@ console.log(idUser)
     const imgae = form.image.files[0]
     const email = user?.email
 
-     // host image to imgbb 
+    // host image to imgbb 
     const formData = new FormData()
     formData.append('image',imgae)
     const url =`https://api.imgbb.com/1/upload?key=3a844d0da001165fa740ac3aec82b85f`
@@ -74,8 +79,8 @@ console.log(idUser)
         salesStatus :'unsold'
       }
      
-     if(idUser === 'seller'){
-         // send-server-db 
+     if(profileUser === 'seller'){
+      // send-server-db 
       fetch('http://localhost:5000/category',{
         method:'POSt',
         headers:{
