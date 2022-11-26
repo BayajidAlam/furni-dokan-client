@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import BookingModal from '../../../components/BookingModal/BookingModal';
 import Card from '../../CategoryPage/Card/Card';
 import AddCard from './AddCard';
 
 const Advertise = () => {
   const [categorys,setCategorys] = useState([])
-
+  const [ selectedCard, setSelectedCart ] = useState(null)
     useEffect(()=>{
       fetch('http://localhost:5000/advertisement')
       .then(res=>res.json())
@@ -21,9 +22,18 @@ const Advertise = () => {
         categorys.map(category=><AddCard
         key={category._id}
         category={category}
+        setSelectedCart={setSelectedCart}
         ></AddCard>)
       }
       </div>
+
+      {
+              selectedCard && 
+              <BookingModal
+              selectedCard={selectedCard}
+              setSelectedCart={setSelectedCart}
+              ></BookingModal>
+            }
     </div>
   );
 };

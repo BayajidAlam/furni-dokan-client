@@ -1,9 +1,11 @@
 import React from 'react';
 import { HiOutlineLocationMarker } from "react-icons/hi";
 
-const AddCard = ({category}) => {
-  const {picture,name,location,originalPrice,useingFrom,sallerName,postedOn,resalePrice,setSelectedCart,singlecat} = category
-  console.log(category);
+const AddCard = ({category,setSelectedCart}) => {
+
+  const {picture,name,location,originalPrice,useingFrom,sallerName,postedOn,resalePrice,singlecat} = category
+
+  
   return (
     <div className="card w-full shadow-lg bg-[#dbebfa] rounded-none text-[#000000]">
     <figure>
@@ -28,7 +30,7 @@ const AddCard = ({category}) => {
       </div>
       <div className="card-actions justify-end">
         <label 
-          onClick={()=>setSelectedCart(singlecat)}
+          onClick={()=>setSelectedCart(category)}
           htmlFor="booking-model" 
           className="btn btn w-36 rounded-md">Book Now</label>
       </div>
