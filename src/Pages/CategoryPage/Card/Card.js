@@ -1,10 +1,12 @@
 import React from "react";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { FcApproval } from "react-icons/fc";
 
-const Card = ({singlecat}) => {
-  console.log(singlecat);
+
+const Card = ({singlecat,setSelectedCart}) => {
+
+  // console.log(singlecat);
   const { picture,name,postedOn, resalePrice, sallerName, useingFrom, catName, isVerified, priginalPrice,location,originalPrice } = singlecat
+  
   return (
     <div className="card w-full shadow-lg bg-[#dbebfa] rounded-none text-[#000000]">
       <figure>
@@ -28,7 +30,10 @@ const Card = ({singlecat}) => {
         <p>isVerified</p>
         </div>
         <div className="card-actions justify-end">
-          <button className="btn w-36 rounded-md">Book Now</button>
+          <label 
+            onClick={()=>setSelectedCart(singlecat)}
+            htmlFor="booking-model" 
+            className="btn btn w-36 rounded-md">Book Now</label>
         </div>
       </div>
     </div>
