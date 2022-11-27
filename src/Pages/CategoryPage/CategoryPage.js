@@ -10,6 +10,12 @@ const CategoryPage = () => {
 
   return (
       <section>
+            {
+              data.length === 0?
+              <div className='flex justify-center items-center h-screen'>
+                <p className='text-3xl'>No items Found!</p>
+              </div>
+              :  
               <div className='max-w-[1440px] mx-auto grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3 my-4'>
               {
               data.map(singlecat=><Card
@@ -19,6 +25,7 @@ const CategoryPage = () => {
               ></Card>)
               } 
              </div>
+            }
             {
               selectedCard && 
               <BookingModal

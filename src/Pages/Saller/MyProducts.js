@@ -1,14 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../context/AuthProvider";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import { useContext } from "react";
-
 
 const MyProducts = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email;
 
-  const { data: myProducts = [],refetch,isLoading } = useQuery({
+  const {
+    data: myProducts = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["myProdcuts", email],
     queryFn: async () => {
       const res = await fetch(
@@ -19,53 +22,59 @@ const MyProducts = () => {
     },
   });
 
-    // loader for smooth experience 
+  // loader for smooth experience
 
-    if(isLoading){
-      return <div className='flex justify-center mt-80'>
+  if (isLoading) {
+    return (
+      <div className="flex justify-center mt-80">
         <div className="w-20 h-20 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>
       </div>
-    }
+    );
+  }
 
   // admin:delete a item
-  const handleDelete = id => {
-    fetch(`http://localhost:5000/deleteProduct?id=${id}`,{
-      method:"DELETE",
-      headers:{
-        'content-type':'application/json'
-      }
+  const handleDelete = (id) => {
+    fetch(`http://localhost:5000/deleteProduct?id=${id}`, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
     })
-    .then(res=>res.json())
-    .then(data=>{
-      if (data.deletedCount > 0) {
-        refetch();
-        toast.success('User deleted Successfully!')
-      }
-    })
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          refetch();
+          toast.success("User deleted Successfully!");
+        }
+      });
+  };
 
-  // update a product to advertise 
+  // update a product to advertise
   const handleAdvertise = (id) => {
     const updatedDoc = {
-      state:'advertised'
-    }
-    fetch(`http://localhost:5000/advertisement/${id}`,{
-      method:"PUT",
+      state: "advertised",
+    };
+    fetch(`http://localhost:5000/advertisement/${id}`, {
+      method: "PUT",
       headers: {
-        'content-type':'application/json'
+        "content-type": "application/json",
       },
-      body:JSON.stringify(updatedDoc)
+      body: JSON.stringify(updatedDoc),
     })
-    .then(res=>res.json())
-    .then(data=>{
-      if(data.modifiedCount){
-        refetch()
-        toast.success('Added to advertise')
-      }
-    })
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          refetch();
+          toast.success("Added to advertise");
+        }
+      });
+  };
 
-  return (
+  return myProducts.length === 0 ? (
+    <div className="flex justify-center my-2">
+    <p className="text-xl">Please add at least one product</p>
+  </div>
+  ) : (
     <div className="overflow-x-auto w-full">
       <table className="table w-full">
         <thead>
@@ -103,7 +112,10 @@ const MyProducts = () => {
               <td>{product.resalePrice}</td>
               <td>{product.salesStatus === "unsold" ? "Unsold" : "Sold"}</td>
               <th>
-                <button onClick={()=>handleDelete(product._id)} className="btn btn-ghost btn-xs">
+                <button
+                  onClick={() => handleDelete(product._id)}
+                  className="btn btn-ghost btn-xs"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -121,36 +133,39 @@ const MyProducts = () => {
                 </button>
               </th>
               <th>
-              {
-                product.salesStatus === 'unsold' && product.addState !== 'advertised' ? 
-                <button
-                onClick={()=>handleAdvertise(product._id)}
-                className="btn btn-sm hover:bg-[#dbebfa]  bg-base-200 text-[#000000]">Advertise</button>
-                :
-              <div className="flex items-center">
-                <p>Added</p>
-                 <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                strokeWidth={1.5} 
-                stroke="currentColor" 
-                className="w-6 h-6 ml-2 bg-green-500 p-1 text-white rounded-2xl">
-                <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" 
-                />
-              </svg>
-              </div>
-              
-              }
+                {product.salesStatus === "unsold" &&
+                product.addState !== "advertised" ? (
+                  <button
+                    onClick={() => handleAdvertise(product._id)}
+                    className="btn btn-sm hover:bg-[#dbebfa]  bg-base-200 text-[#000000]"
+                  >
+                    Advertise
+                  </button>
+                ) : (
+                  <div className="flex items-center">
+                    <p>Added</p>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6 ml-2 bg-green-500 p-1 text-white rounded-2xl"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
+                      />
+                    </svg>
+                  </div>
+                )}
               </th>
             </tr>
           ))}
         </tbody>
       </table>
-      <Toaster/>
+      <Toaster />
     </div>
   );
 };

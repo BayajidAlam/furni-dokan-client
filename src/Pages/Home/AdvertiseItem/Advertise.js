@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import BookingModal from '../../../components/BookingModal/BookingModal';
-import Card from '../../CategoryPage/Card/Card';
+
 import AddCard from './AddCard';
 
 const Advertise = () => {
   const [categorys,setCategorys] = useState([])
   const [ selectedCard, setSelectedCart ] = useState(null)
+  
     useEffect(()=>{
       fetch('http://localhost:5000/advertisement')
       .then(res=>res.json())

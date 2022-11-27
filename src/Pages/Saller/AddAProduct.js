@@ -49,7 +49,7 @@ const AddAProduct = () => {
     const postedOn = new Date()
     const imgae = form.image.files[0]
     const email = user?.email
-
+    const reportState = 'not reported'
     // host image to imgbb 
     const formData = new FormData()
     formData.append('image',imgae)
@@ -76,7 +76,8 @@ const AddAProduct = () => {
         conditions,
         description,
         email,
-        salesStatus :'unsold'
+        salesStatus :'unsold',
+        reportState
       }
      
      if(profileUser !== 'seller'){

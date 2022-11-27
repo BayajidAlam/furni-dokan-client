@@ -22,7 +22,6 @@ const Login = () => {
 
 
   const handleLogin = data => {
-
     // sign in existing user 
     setLogInError('')
     signInUser(data.email,data.password)

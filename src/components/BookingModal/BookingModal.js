@@ -3,9 +3,9 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../../context/AuthProvider";
 
 const BookingModal = ({selectedCard,setSelectedCart}) => {
-  const { name, resalePrice, email, picture} = selectedCard
+  const { name, resalePrice, email, picture,_id} = selectedCard
   const { user } = useContext(AuthContext)
-  console.log(picture);
+  
   const handleSubmit = (event) => {
       event.preventDefault()
       const form = event.target 
@@ -39,9 +39,28 @@ const BookingModal = ({selectedCard,setSelectedCart}) => {
       .then(data=>{
         if(data.acknowledged){
           setSelectedCart(null)
+          handleUpdateBook(selectedCard._id)
           toast.success('Successfully Booked')
         }
       })
+  }
+
+  // set as booked
+  const handleUpdateBook = (id) => {
+   const body = {
+    salesStatus:'sold'
+   }
+  fetch(`http://localhost:5000/setbooked/${id}`,{
+    method:'PUT',
+    headers:{
+      'content-type':'application/json'
+    },
+    body:JSON.stringify(body)
+  })
+  .then(res=>res.json())
+  .then(data=>{
+    
+  })
   }
 
   return (
@@ -119,7 +138,7 @@ const BookingModal = ({selectedCard,setSelectedCart}) => {
                       required/>
                     </div>
 
-                <button 
+                <button
                 type="submit"
                 className="btn w-full my-2"
                 >Submit</button>
