@@ -7,7 +7,7 @@ const CategoryPage = () => {
 
   const  data  = useLoaderData()
   const [ selectedCard, setSelectedCart ] = useState(null)
-
+ 
   return (
       <section>
             {
