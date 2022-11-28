@@ -28,7 +28,6 @@ const AllSellers = () => {
 
   // admin:delete a user
   const handleDelete = (email) => {
-    console.log(email);
     fetch(`http://localhost:5000/deleteuser?email=${email}`, {
       method: "DELETE",
       headers: {
@@ -46,25 +45,45 @@ const AllSellers = () => {
 
   // verify seeller
   const handleSellerVerify = (email) => {
-    console.log(email)
-    // const updatedDoc = {
-    //   sellerState: "verified",
-    // };
-    // fetch(`http://localhost:5000/updateSeller/${id}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(updatedDoc),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if (data.modifiedCount > 0) {
-    //       refetch();
-    //       toast.success("Seller verified Successfully");
-    //     }
-    //   });
+    const updatedDoc = {
+      sellerState: "verified",
+    };
+    fetch(`http://localhost:5000/updateSeller/${email}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(updatedDoc),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          updateUser(email)
+          refetch();
+          toast.success("Seller verified Successfully");
+        }
+      });
   };
+
+  // when a seller is verified update it to user collection as well as singleCategoryCollection 
+  const updateUser = (email) => {
+    const updatedDoc = {
+      sellerState: "verified",
+    };
+    fetch(`http://localhost:5000/updateUser/${email}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(updatedDoc),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          refetch();
+        }
+      });
+  }
 
   return (
     <div className="overflow-x-auto">
