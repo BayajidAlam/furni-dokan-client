@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
-
-const CheckOutForm = ({payment,setPayment,refetch}) => {
-
+const CheckOutForm = ({ payment, setPayment, refetch }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const [cardError, setCardError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [transactionId, setTransactionId] = useState('');
-  const [ processing, setProcessing ] = useState(false)
+  const [cardError, setCardError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [transactionId, setTransactionId] = useState("");
+  const [processing, setProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
-  const { price,buyerEmail,_id } = payment;
- 
+  const { price, buyerEmail, _id } = payment;
+
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("http://localhost:5000/create-payment-intent", {
+    fetch("https://furni-dokan.vercel.app/create-payment-intent", {
       method: "POST",
-      headers: { 
-        "Content-Type": "application/json" ,
-        authorization: `bearer ${localStorage.getItem('accessToken')}`
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
       },
-      body: JSON.stringify({price}),
+      body: JSON.stringify({ price }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
   }, [price]);
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -52,58 +49,54 @@ const CheckOutForm = ({payment,setPayment,refetch}) => {
       console.log("[PaymentMethod]", paymentMethod);
       setCardError("");
     }
-    setSuccess('')
-    setProcessing(true)
-    const {paymentIntent, error: confirmError} = await stripe.confirmCardPayment(
-      clientSecret,
-      {
+    setSuccess("");
+    setProcessing(true);
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: card,
           billing_details: {
             name: payment.buyerName,
-            email: payment.buyerEmail          
+            email: payment.buyerEmail,
           },
         },
-      },
-    );
+      });
 
-    if(confirmError){
-      setCardError(confirmError.message)
+    if (confirmError) {
+      setCardError(confirmError.message);
       return;
     }
-    if(paymentIntent.status === 'succeeded'){
-      console.log('card-info',card);
-    //  paymentInfo
+    if (paymentIntent.status === "succeeded") {
+      console.log("card-info", card);
+      //  paymentInfo
       const payment = {
         price,
-        transactionId:paymentIntent.id,
+        transactionId: paymentIntent.id,
         email: buyerEmail,
         bookingId: _id,
-        payment:'paid'
-      }
-       // store payment info to db 
-      fetch('http://localhost:5000/payments',{
-        method:'POST',
-        headers:{
-          'content-type':'application/json',
-          authorization: `bearer ${localStorage.getItem('accessToken')}`
+        payment: "paid",
+      };
+      // store payment info to db
+      fetch("https://furni-dokan.vercel.app/payments", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
         },
-        body:JSON.stringify(payment)
+        body: JSON.stringify(payment),
       })
-      .then(res=>res.json())
-      .then(data=>{
-        if(data.insertedId){
-          setSuccess('Congrats! your payment completed')
-          setTransactionId(paymentIntent.id)
-          setPayment(null)
-          refetch()
-        }
-      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.insertedId) {
+            setSuccess("Congrats! your payment completed");
+            setTransactionId(paymentIntent.id);
+            setPayment(null);
+            refetch();
+          }
+        });
     }
-    setProcessing(false)
+    setProcessing(false);
   };
-
-  
 
   return (
     <>
@@ -133,12 +126,15 @@ const CheckOutForm = ({payment,setPayment,refetch}) => {
           Pay
         </button>
       </form>
-      {
-        success && <div>
+      {success && (
+        <div>
           <p className="text-green-500 my-1">{success}</p>
-          <p>Your transactionId: <span className="font-bold">{transactionId}</span></p>
+          <p>
+            Your transactionId:{" "}
+            <span className="font-bold">{transactionId}</span>
+          </p>
         </div>
-      }
+      )}
     </>
   );
 };

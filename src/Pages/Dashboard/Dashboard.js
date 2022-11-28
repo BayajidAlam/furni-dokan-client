@@ -3,7 +3,7 @@ import React from 'react';
 const Dashboard = () => {
   return (
     <div className='flex justify-center'>
-      <h2>Coming Soon.....</h2>
+      <h2 className='text-2xl mt-8'>Welcome to Dashboard</h2>
     </div>
   );
 };

@@ -24,7 +24,7 @@ const Card = ({ singlecat, setSelectedCart }) => {
   };
 
   const handleReport = (id) => {
-    fetch(`http://localhost:5000/report/${id}`, {
+    fetch(`https://furni-dokan.vercel.app/report/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -38,7 +38,7 @@ const Card = ({ singlecat, setSelectedCart }) => {
         }
       });
   };
-  
+
   return (
     <div className="card w-full shadow-lg bg-[#dbebfa] rounded-none text-[#000000]">
       <figure>

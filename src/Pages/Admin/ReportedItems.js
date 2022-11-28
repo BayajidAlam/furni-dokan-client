@@ -6,7 +6,7 @@ const ReportedItems = () => {
   const { data: repotedItem = [], refetch } = useQuery({
     queryKey: ["reported"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/reported");
+      const res = await fetch("https://furni-dokan.vercel.app/reported");
       const data = res.json();
       return data;
     },
@@ -14,7 +14,7 @@ const ReportedItems = () => {
   console.log(repotedItem.length);
   // delete reported item
   const handleDeleteReported = (id) => {
-    fetch(`http://localhost:5000/reported/${id}`, {
+    fetch(`https://furni-dokan.vercel.app/reported/${id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",

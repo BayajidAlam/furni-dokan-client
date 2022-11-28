@@ -17,75 +17,81 @@ import MyProducts from "../Pages/Saller/MyProducts";
 import SignUp from "../Pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 
-
 export const router = createBrowserRouter([
   {
-    path:'/',
+    path: "/",
     element: <Main></Main>,
-    errorElement:<Error404></Error404>,
-    children:  [
-      {
-        path: '/',
-        element:<Home></Home>
-      },
-      {
-        path: '/login',
-        element: <Login></Login>
-      },
-      {
-        path: '/blogs',
-        element: <Blog></Blog>
-      },
-      {
-        path:'/category/:name',
-        element: <PrivateRoute><CategoryPage></CategoryPage></PrivateRoute>,
-        loader: ({params})=>fetch(`http://localhost:5000/category?name=${params.name}`)
-      },
-      {
-        path:'/signup',
-        element: <SignUp></SignUp>
-      }
-    ]
-  },
-  {
-    path:'/dashboard',
-    element: <PrivateRoute><DashBoardLayout></DashBoardLayout></PrivateRoute>,
-    errorElement:<Error404></Error404>,
+    errorElement: <Error404></Error404>,
     children: [
       {
-        path:'/dashboard',
-        element: <Dashboard></Dashboard>
+        path: "/",
+        element: <Home></Home>,
       },
       {
-        path:'/dashboard/myorders',
-        element: <MyOrders></MyOrders>
+        path: "/login",
+        element: <Login></Login>,
       },
       {
-        path:'/dashboard/addAProduct',
-        element: <AddAProduct></AddAProduct>
+        path: "/blogs",
+        element: <Blog></Blog>,
       },
       {
-        path:'/dashboard/myProduct',
-        element: <MyProducts></MyProducts>
+        path: "/category/:name",
+        element: (
+          <PrivateRoute>
+            <CategoryPage></CategoryPage>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`https://furni-dokan.vercel.app/category?name=${params.name}`),
       },
       {
-        path:'/dashboard/myBuyers',
-        element: <MyBuyers></MyBuyers>
+        path: "/signup",
+        element: <SignUp></SignUp>,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashBoardLayout></DashBoardLayout>
+      </PrivateRoute>
+    ),
+    errorElement: <Error404></Error404>,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard></Dashboard>,
       },
       {
-        path:'/dashboard/allSellers',
-        element:<AllSellers></AllSellers>
+        path: "/dashboard/myorders",
+        element: <MyOrders></MyOrders>,
       },
       {
-        path:'dashboard/allbuyers',
-        element: <AllBuyers></AllBuyers>
+        path: "/dashboard/addAProduct",
+        element: <AddAProduct></AddAProduct>,
       },
       {
-        path:'dashboard/reportedItems',
-        element: <ReportedItems></ReportedItems>
-      }
-
-    ]
-  }
-])
-
+        path: "/dashboard/myProduct",
+        element: <MyProducts></MyProducts>,
+      },
+      {
+        path: "/dashboard/myBuyers",
+        element: <MyBuyers></MyBuyers>,
+      },
+      {
+        path: "/dashboard/allSellers",
+        element: <AllSellers></AllSellers>,
+      },
+      {
+        path: "dashboard/allbuyers",
+        element: <AllBuyers></AllBuyers>,
+      },
+      {
+        path: "dashboard/reportedItems",
+        element: <ReportedItems></ReportedItems>,
+      },
+    ],
+  },
+]);

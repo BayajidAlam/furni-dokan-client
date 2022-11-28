@@ -9,12 +9,14 @@ const MyBuyers = () => {
   const { data: buyers = [] } = useQuery({
     queryKey: ["buyers"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/buyers?email=${email}`);
+      const res = await fetch(
+        `https://furni-dokan.vercel.app/buyers?email=${email}`
+      );
       const data = await res.json();
       return data;
     },
   });
- 
+
   return buyers.length === 0 ? (
     <div className="flex justify-center my-2">
       <p className="text-xl">Your have no buyer yet</p>

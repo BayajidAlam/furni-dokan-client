@@ -11,7 +11,9 @@ const AllSellers = () => {
   } = useQuery({
     queryKey: ["allSellers"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/allSellers?role=seller");
+      const res = await fetch(
+        "https://furni-dokan.vercel.app/allSellers?role=seller"
+      );
       const data = await res.json();
       return data;
     },
@@ -28,7 +30,7 @@ const AllSellers = () => {
 
   // admin:delete a user
   const handleDelete = (email) => {
-    fetch(`http://localhost:5000/deleteuser?email=${email}`, {
+    fetch(`https://furni-dokan.vercel.app/deleteuser?email=${email}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
@@ -48,7 +50,7 @@ const AllSellers = () => {
     const updatedDoc = {
       sellerState: "verified",
     };
-    fetch(`http://localhost:5000/updateSeller/${email}`, {
+    fetch(`https://furni-dokan.vercel.app/updateSeller/${email}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -58,19 +60,19 @@ const AllSellers = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
-          updateUser(email)
+          updateUser(email);
           refetch();
           toast.success("Seller verified Successfully");
         }
       });
   };
 
-  // when a seller is verified update it to user collection as well as singleCategoryCollection 
+  // when a seller is verified update it to user collection as well as singleCategoryCollection
   const updateUser = (email) => {
     const updatedDoc = {
       sellerState: "verified",
     };
-    fetch(`http://localhost:5000/updateUser/${email}`, {
+    fetch(`https://furni-dokan.vercel.app/updateUser/${email}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -83,7 +85,7 @@ const AllSellers = () => {
           refetch();
         }
       });
-  }
+  };
 
   return (
     <div className="overflow-x-auto">

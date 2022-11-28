@@ -15,7 +15,7 @@ const MyProducts = () => {
     queryKey: ["myProdcuts", email],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/myProdcuts?email=${email}`
+        `https://furni-dokan.vercel.app/myProdcuts?email=${email}`
       );
       const data = await res.json();
       return data;
@@ -34,7 +34,7 @@ const MyProducts = () => {
 
   // admin:delete a item
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/deleteProduct?id=${id}`, {
+    fetch(`https://furni-dokan.vercel.app/deleteProduct?id=${id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -54,7 +54,7 @@ const MyProducts = () => {
     const updatedDoc = {
       state: "advertised",
     };
-    fetch(`http://localhost:5000/advertisement/${id}`, {
+    fetch(`https://furni-dokan.vercel.app/advertisement/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -72,8 +72,8 @@ const MyProducts = () => {
 
   return myProducts.length === 0 ? (
     <div className="flex justify-center my-2">
-    <p className="text-xl">Please add at least one product</p>
-  </div>
+      <p className="text-xl">Please add at least one product</p>
+    </div>
   ) : (
     <div className="overflow-x-auto w-full">
       <table className="table w-full">
