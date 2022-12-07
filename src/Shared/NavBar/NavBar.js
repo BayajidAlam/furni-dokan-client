@@ -69,13 +69,13 @@ const NavBar = () => {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-compact dropdown-content mt-3 p-2 shadow  rounded-box w-52"
           >
            {menuItems}
           </ul>
         </div>
 
-        <a className="btn btn-ghost normal-case text-xl">Furni Dokan</a>
+        <Link to='/' className="btn btn-ghost normal-case text-xl">Furni Dokan</Link>
 
       </div>
 

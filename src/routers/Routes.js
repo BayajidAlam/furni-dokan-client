@@ -82,15 +82,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/allSellers",
-        element: <AllSellers></AllSellers>,
+        element: <PrivateRoute><AllSellers></AllSellers></PrivateRoute>,
       },
       {
         path: "dashboard/allbuyers",
-        element: <AllBuyers></AllBuyers>,
+        element: <PrivateRoute><AllBuyers></AllBuyers></PrivateRoute>,
       },
       {
         path: "dashboard/reportedItems",
-        element: <ReportedItems></ReportedItems>,
+        element: <PrivateRoute><ReportedItems></ReportedItems></PrivateRoute>,
       },
     ],
   },

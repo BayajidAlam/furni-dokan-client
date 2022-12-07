@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import toast, { Toaster } from "react-hot-toast";
 

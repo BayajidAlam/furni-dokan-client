@@ -32,3 +32,6 @@ Furni  Dokan is a secondhand furniture selling website .I have build this using 
 - Indevisual dashboard for seller,buyer and admin 
 
 
+## Check admin portal
+email: admin@gmail.com
+password: #Adm12345
