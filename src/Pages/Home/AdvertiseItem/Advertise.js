@@ -17,7 +17,7 @@ const Advertise = () => {
 
   return (
     <div>
-      <p className="text-xl lg:mx-4 font-semibold">Advertie section</p>
+      <p className="text-xl lg:mx-4 font-semibold">Advertise section</p>
       <div className="max-w-[1440px] mx-auto grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3 my-4">
         {categorys.map((category) => (
           <AddCard
