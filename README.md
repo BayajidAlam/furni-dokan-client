@@ -31,4 +31,6 @@ Furni  Dokan is a secondhand furniture selling website .I have build this using 
 - Stripe as payment method 
 - Indevisual dashboard for seller,buyer and admin 
 
-
+## admin
+email: admin@gmail.com
+password: #Adm12345
